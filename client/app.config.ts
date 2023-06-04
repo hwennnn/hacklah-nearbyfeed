@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: Env.NAME,
   description: `${Env.NAME} Mobile App`,
-  slug: 'obytesapp',
+  slug: 'nearbyfeed',
   version: Env.VERSION.toString(),
   orientation: 'portrait',
   icon: `${withEnvSuffix('./assets/icon')}.png`,
@@ -37,8 +37,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     ['@bacons/link-assets', ['./assets/fonts/Inter.ttf']],
     'expo-localization',
+    [
+      'expo-image-picker',
+      {
+        photosPermission:
+          'This app requires access to the photo library to select images.',
+      },
+    ],
   ],
   extra: {
     ...ClientEnv,
   },
+  scheme: 'nearbyfeed',
 });

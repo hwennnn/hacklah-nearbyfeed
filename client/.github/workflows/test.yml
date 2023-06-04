@@ -1,10 +1,7 @@
-name: Tests (jest)
+name: Validate PR
 
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  workflow_call:
 
 jobs:
   test:

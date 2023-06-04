@@ -1,17 +1,7 @@
 name: Expo Doctor (expo)
 
 on:
-  push:
-    branches:
-      - main
-      - master
-    paths:
-      - "package.json"
-      - "pnpm-lock.yaml"
-  pull_request:
-    paths:
-      - "package.json"
-      - "pnpm-lock.yaml"
+  workflow_call:
 
 jobs:
   doctor:

@@ -31,9 +31,9 @@ require('dotenv').config({
  * for example: if the APP_ENV is staging, the bundle id will be com.client.staging
  */
 
-const BUNDLE_ID = 'com.client'; // ios bundle id
-const PACKAGE = 'com.client'; // android package name
-const NAME = 'client'; // app name
+const BUNDLE_ID = 'com.nearbyfeed'; // ios bundle id
+const PACKAGE = 'com.nearbyfeed'; // android package name
+const NAME = 'nearbyfeed'; // app name
 
 /**
  * We declare a function withEnvSuffix that will add a suffix to the variable name based on the APP_ENV
@@ -73,6 +73,7 @@ const client = z.object({
 
   // ADD YOUR CLIENT ENV VARS HERE
   API_URL: z.string(),
+  NOMINATIM_OPENSTREETMAP_ENDPOINT: z.string(),
 });
 
 const buildTime = z.object({
@@ -92,6 +93,8 @@ const _clientEnv = {
 
   // ADD YOUR ENV VARS HERE TOO
   API_URL: process.env.API_URL,
+  NOMINATIM_OPENSTREETMAP_ENDPOINT:
+    process.env.NOMINATIM_OPENSTREETMAP_ENDPOINT,
 };
 
 /**

@@ -1,6 +1,6 @@
 # NearbyFeed Backend
 
-This is the backend server for the NearbyFeed app. It provides the necessary APIs and functionalities for creating, retrieving, and managing posts and comments in the NearbyFeed app.
+This is the backend server for the NearbyFeed app. It provides the necessary APIs and functionalities for creating, retrieving, and managing feeds and comments in the NearbyFeed app.
 
 ## Installation
 

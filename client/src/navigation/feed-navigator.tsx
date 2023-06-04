@@ -1,41 +1,77 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useColorScheme } from 'nativewind';
 import * as React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-import { AddPost, Feed, Post } from '@/screens';
-import { Pressable, Text } from '@/ui';
+import type { Post as PostEntitiy } from '@/api';
+import { AddFeed, Feed, Post } from '@/screens';
+import { TouchableOpacity } from '@/ui';
+import colors from '@/ui/theme/colors';
 
 export type FeedStackParamList = {
   Feed: undefined;
-  Post: { id: number };
-  AddPost: undefined;
+  Post: { post: PostEntitiy };
+  AddFeed: undefined;
 };
 
 const Stack = createNativeStackNavigator<FeedStackParamList>();
 
-const GoToAddPost = () => {
-  const { navigate } = useNavigation();
+const CloseButton = () => {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
+  const { goBack, canGoBack } = useNavigation<FeedNavigatorProp>();
+
+  const closeModal = () => {
+    if (canGoBack()) {
+      goBack();
+    }
+  };
+
   return (
-    <Pressable onPress={() => navigate('AddPost')} className="p-2">
-      <Text className="text-primary-300">Create</Text>
-    </Pressable>
+    <TouchableOpacity onPress={closeModal} className="">
+      <Icon
+        name="close"
+        size={28}
+        color={isDark ? colors.white : colors.black}
+      />
+    </TouchableOpacity>
   );
 };
+
+type Props = NativeStackScreenProps<FeedStackParamList>;
+export type FeedNavigatorProp = Props['navigation'];
 
 export const FeedNavigator = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Feed"
+        component={Feed}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen name="Post" component={Post} />
+
       <Stack.Group
         screenOptions={{
-          // eslint-disable-next-line react/no-unstable-nested-components
-          headerRight: () => <GoToAddPost />,
+          presentation: 'fullScreenModal',
         }}
       >
-        <Stack.Screen name="Feed" component={Feed} />
-        <Stack.Screen name="Post" component={Post} />
+        <Stack.Screen
+          name="AddFeed"
+          component={AddFeed}
+          options={{
+            headerTitle: 'Create a Feed',
+            headerLeft: () => <CloseButton />,
+          }}
+        />
       </Stack.Group>
-
-      <Stack.Screen name="AddPost" component={AddPost} />
     </Stack.Navigator>
   );
 };

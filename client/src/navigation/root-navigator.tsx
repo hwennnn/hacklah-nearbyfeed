@@ -4,19 +4,22 @@ import React, { useEffect } from 'react';
 
 import { useAuth } from '@/core';
 import { useIsFirstTime } from '@/core/hooks';
+import { TabNavigator } from '@/navigation/tab-navigator';
+import type { RootStackParamList } from '@/navigation/types';
 import { Onboarding } from '@/screens';
 
 import { AuthNavigator } from './auth-navigator';
 import { NavigationContainer } from './navigation-container';
-import { TabNavigator } from './tab-navigator';
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const Root = () => {
   const status = useAuth.use.status();
+
   const [isFirstTime] = useIsFirstTime();
   const hideSplash = React.useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
+
   useEffect(() => {
     if (status !== 'idle') {
       hideSplash();
